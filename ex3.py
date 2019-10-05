@@ -24,7 +24,7 @@ while i < 4:
             p += 1
 
         j += 1
-    
+
     if p == 2:
         nxp = i
         nyp = j
@@ -43,5 +43,3 @@ Mn = [(R * math.cos(angle_new),
        R * math.sin(angle_new + 3 * math.pi / 2))]
 
 print(Mn)
-
-
