@@ -1,6 +1,6 @@
 import math
 
-M = [(-1, -1), (-1, 1), (1, 1), (1, -1)]
+M = [(5, 4), (4, 3), (3, 4), (4, 5)]
 x01 = M[0][0]
 x02 = M[1][0]
 x03 = M[2][0]
@@ -19,11 +19,11 @@ while i < 4:
     j = 0
     p = 0
 
-    while j < 2:
-        if M[i][j] > 0:
-            p += 1
+    if M[i][0] - xc >= 0:
+        p += 1
 
-        j += 1
+    if M[i][1] - yc >= 0:
+        p += 1
 
     if p == 2:
         nxp = i
@@ -31,15 +31,15 @@ while i < 4:
 
     i += 1
 
-angle0 = math.acos(M[nxp][0] / R)
+angle0 = math.acos((M[nxp][0] - xc) / R)
 angle_new = angle - angle0
-Mn = [(R * math.cos(angle_new),
-       R * math.sin(angle_new)),
-      (R * math.cos(angle_new + math.pi / 2),
-       R * math.sin(angle_new + math.pi / 2)),
-      (R * math.cos(angle_new + math.pi),
-       R * math.sin(angle_new + math.pi)),
-      (R * math.cos(angle_new + 3 * math.pi / 2),
-       R * math.sin(angle_new + 3 * math.pi / 2))]
+Mn = [(R * math.cos(angle_new) + xc,
+       R * math.sin(angle_new) + yc),
+      (R * math.cos(angle_new + math.pi / 2) + xc,
+       R * math.sin(angle_new + math.pi / 2) + yc),
+      (R * math.cos(angle_new + math.pi) + xc,
+       R * math.sin(angle_new + math.pi) + yc),
+      (R * math.cos(angle_new + 3 * math.pi / 2) + xc,
+       R * math.sin(angle_new + 3 * math.pi / 2) + yc)]
 
 print(Mn)
