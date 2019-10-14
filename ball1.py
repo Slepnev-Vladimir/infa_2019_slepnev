@@ -26,7 +26,13 @@ dT = 0
 V = 30
 
 
+# creating objects
+
+
 def appearsup(numb):
+    """responsible for creating a superobject"""
+    """BE CAREFUL!"""
+    """don't use supfunctions and not supfunctions for the same object"""
     x[numb] = rnd(100, 700)
     y0[numb] = rnd(100, 500)
     r[numb] = rnd(20, 40)
@@ -41,12 +47,48 @@ def appearsup(numb):
             width=0)
 
 
+def appear(numb):
+    """responsible for creating an object"""
+    """BE CAREFUL!"""
+    """don't use supfunctions and not supfunctions for the same object"""
+    x[numb] = rnd(100, 700)
+    y[numb] = rnd(100, 500)
+    r[numb] = rnd(30, 50)
+    color[numb] = choice(colors)
+    canv.create_oval(
+            x[numb] - r[numb],
+            y[numb] - r[numb],
+            x[numb] + r[numb],
+            y[numb] + r[numb],
+            fill=color[numb],
+            width=0)
+
+
+def new_ball():
+    """responsible for creating"""
+    global i
+    canv.delete(ALL)
+    canv.create_text(100, 100, text=i, justify=CENTER, font="Verdana 100")
+    appear(0)
+    appear(1)
+    appear(2)
+    appearsup(3)
+    root.after(T, new_ball)
+    if i > 3:
+        i -= 3
+
+
+# moving objects
+
+
 def brainsup(numb):
+    """responsible for calculation a superobject trajectory"""
+    """BE CAREFUL!"""
+    """don't use supfunctions and not supfunctions for the same object"""
     if x[numb] > 700 or x[numb] < 100:
         dirx[numb] *= -1
 
     x[numb] += 3 * V * dT / T * dirx[numb]
-    canv.create_text(100, 100, text=i, justify=CENTER, font="Verdana 100")
     y[numb] = ampl[numb] * math.sin(3 * x[numb] / ampl[numb]) + y0[numb]
 
     if y[numb] < 100:
@@ -62,18 +104,22 @@ def brainsup(numb):
             y[numb] + r[numb],
             fill=color[numb],
             width=0)
+    canv.create_text(100, 100, text=i, justify=CENTER, font="Verdana 100")
 
 
 def brain(numb):
+    """responsible for calculation an object trajectory"""
+    """BE CAREFUL!"""
+    """don't use supfunctions and not supfunctions for the same object"""
     if x[numb] > 700 or x[numb] < 100:
-        dirx[numb] *= -1
+        dirx[numb] *= rnd(1, 10) / (-5)
 
     if y[numb] > 500 or y[numb] < 100:
         diry[numb] *= -1
 
     x[numb] += V * dT / T * dirx[numb]
-    canv.create_text(100, 100, text=i, justify=CENTER, font="Verdana 100")
     y[numb] += V * dT / T * diry[numb]
+    
     canv.create_oval(
             x[numb] - r[numb],
             y[numb] - r[numb],
@@ -81,23 +127,11 @@ def brain(numb):
             y[numb] + r[numb],
             fill=color[numb],
             width=0)
-
-
-def appear(numb):
-    x[numb] = rnd(100, 700)
-    y[numb] = rnd(100, 500)
-    r[numb] = rnd(30, 50)
-    color[numb] = choice(colors)
-    canv.create_oval(
-            x[numb] - r[numb],
-            y[numb] - r[numb],
-            x[numb] + r[numb],
-            y[numb] + r[numb],
-            fill=color[numb],
-            width=0)
+    canv.create_text(100, 100, text=i, justify=CENTER, font="Verdana 100")
 
 
 def move():
+    """responsible for movement"""
     canv.delete(ALL)
     brain(0)
     brain(1)
@@ -107,20 +141,13 @@ def move():
     root.after(50, move)
 
 
-def new_ball():
-    global i
-    canv.delete(ALL)
-    canv.create_text(100, 100, text=i, justify=CENTER, font="Verdana 100")
-    appear(0)
-    appear(1)
-    appear(2)
-    appearsup(3)
-    root.after(T, new_ball)
-    if i > 3:
-        i -= 3
+# players actions
 
 
 def check(numb, event):
+    """responsible for checking the hit in the object"""
+    """BE CAREFUL!"""
+    """don't use supfunctions and not supfunctions for the same object"""
     global i, dT
 
     if (event.x - x[numb]) ** 2 + (event.y - y[numb]) ** 2 < r[numb] ** 2:
@@ -131,6 +158,9 @@ def check(numb, event):
 
 
 def checksup(numb, event):
+    """responsible for checking the hit in the superobject"""
+    """BE CAREFUL!"""
+    """don't use supfunctions and not supfunctions for the same object"""
     global i, dT
 
     if abs(event.x - x[numb]) + abs(event.y - y[numb]) < 2 * r[numb]:
@@ -141,6 +171,7 @@ def checksup(numb, event):
 
 
 def click(event):
+    """responsible for the actions of the player"""
     check(0, event)
     check(1, event)
     check(2, event)
