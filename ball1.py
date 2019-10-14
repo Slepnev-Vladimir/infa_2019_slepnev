@@ -119,7 +119,7 @@ def brain(numb):
 
     x[numb] += V * dT / T * dirx[numb]
     y[numb] += V * dT / T * diry[numb]
-    
+
     canv.create_oval(
             x[numb] - r[numb],
             y[numb] - r[numb],
