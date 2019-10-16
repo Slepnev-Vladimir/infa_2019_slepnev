@@ -1,21 +1,27 @@
-M = [5, 4, 3, 2, 1, 10, 420, 30, 0]
-i = 0
+# the program contains a function which makes sorting a choice
 
-while i < 9:
-    j = i
-    p = i
+sort_array = [-1, 5, 4, 3, 2, 1, 10, 420, 30, 0]
 
-    while j < 9:
-        if M[j] < M[p]:
-            p = j
 
-        j += 1
+def min_coord(array):
+    """finds the coordinate of the minimum element"""
+    min_coord = 0
 
-    if M[p] < M[i]:
-        a = M[i]
-        M[i] = M[p]
-        M[p] = a
+    for coord in range(0, len(array)):
+        if array[coord] < array[min_coord]:
+            min_coord = coord
 
-    i += 1
+    return(min_coord)
 
-print(M)
+
+def sorting(sort_array):
+    for coord_1 in range(0, len(sort_array)):
+        coord_2 = min_coord(sort_array[coord_1:]) + coord_1
+
+        if sort_array[coord_1] > sort_array[coord_2]:
+            sort_array[coord_1], sort_array[coord_2] = sort_array[coord_2], sort_array[coord_1]
+
+    return(sort_array)
+
+
+print(sorting(sort_array))
