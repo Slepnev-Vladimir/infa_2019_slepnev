@@ -1,19 +1,20 @@
-M = []
-i = 2
+# the program seaches for primes up to 1000
 
-while i < 1000:
-    j = 2
-    p = 0
+found_primes = [2]
 
-    while j < i:
-        if i % j == 0:
-            p = 1
 
-        j += 1
+def check_prime(number):
+    flag = 0
 
-    if p == 0:
-        M.append(i)
+    for divider in range(0, len(found_primes)):
+        if number % found_primes[divider] == 0:
+            flag = 1
 
-    i += 1
+    if flag == 0:
+        found_primes.append(number)
 
-print(M)
+
+for number in range(3, 1000, 2):
+    check_prime(number)
+
+print(found_primes)
