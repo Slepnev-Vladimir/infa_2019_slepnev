@@ -1,21 +1,12 @@
-M1 = [1, 2, 3, 4, 5, 6, 153]
-M2 = [3, 4, 5, 6, 7, 8, 9]
-M3 = []
-i = 0
+# the program contains a function
+# that subtracts one list from another
 
-while i < len(M1):
-    j = 0
-    p = 0
+list_1 = [1, 2, 3, 4, 5, 6, 153]
+list_2 = [3, 4, 5, 6, 7, 8, 9]
 
-    while j < len(M2):
-        if M1[i] == M2[j]:
-            p = 1
 
-        j += 1
+def difference(list_1, list_2):
+    return(list(set(list_1) - set(list_2)))
 
-    if p == 0:
-        M3.append(M1[i])
 
-    i += 1
-
-print(M3)
+print(difference(list_1, list_2))
