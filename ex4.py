@@ -1,10 +1,18 @@
-sp = {'q': 1, 'w': 2, 'e': 3, 'r': 4}
-a = 3
+# the program contains a function that shows the goods from the menu
+# that can be purchased with a certain amount of money
 
-M = []
+menu = {'product_1': 1, 'product_2': 2, 'product_3': 3, 'product_4': 4}
+money = 3
 
-for key in sp:
-    if sp[key] <= a:
-        M.append(key)
 
-print(M)
+def available(menu, money):
+    available_goods = []
+
+    for key in menu:
+        if menu[key] <= money:
+            available_goods.append(key)
+
+    return(available_goods)
+
+
+print(available(menu, money))
