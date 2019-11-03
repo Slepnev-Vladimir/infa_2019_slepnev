@@ -109,6 +109,9 @@ class Ball:
 
 class Gun:
     def __init__(self, numb):
+        self.energy = 3
+        self.vx = 0
+        self.vy = 0
         self.numb = numb
         self.live = 3
         self.r = 15
@@ -132,8 +135,10 @@ class Gun:
                 fill='black',
                 width=7)
 
-    def fall(self, fild, power, cos_a, sin_a):
+    def move(self, fild, power, cos_a, sin_a):
         touch = 0
+        self.x += self.vx
+        self.y += self.vy
 
         for point in fild:
             dx = self.x - point[0]
@@ -143,20 +148,34 @@ class Gun:
                 touch = 1
 
         if touch == 0:
-            self.y += 1
-            self.drowing(power, cos_a, sin_a)
+            self.vy += 0.1
+        else:
+            self.vy = 0
+            self.vx = 0
 
-#    def move_left(self, event):
-#        self.x -= 3
+        self.drowing(power, cos_a, sin_a)
 
-#    def move_right(self, event):
-#        self.x += 3
+    def move_left(self, event):
+        if self.energy > 0:
+            self.vx -= 2
+            self.vy -= 2
+            self.energy -= 1
 
-#    def move_up(self, event):
-#        self.y -= 3
+    def move_right(self, event):
+        if self.energy > 0:
+            self.vx += 2
+            self.vy -= 2
+            self.energy -= 1
 
-#    def move_down(self, event):
-#        self.y += 3
+    def move_up(self, event):
+        if self.energy > 0:
+            self.vy -= 2
+            self.energy -= 1
+
+    def move_down(self, event):
+        if self.energy > 0:
+            self.vy += 2
+            self.energy -= 1
 
     def drowing(self, power, cos_a, sin_a):
         canvas.delete(self.body_id)
@@ -249,6 +268,7 @@ class Game():
         this_ball.appear(self.gun[self.turn % a].x, self.gun[self.turn % a].y, vx, -vy)
         self.power = 0
         self.preparation = 0
+        self.gun[self.turn % a].energy = 3
         self.turn += 1
 
     def shot_prepair(self, event):
@@ -305,15 +325,15 @@ class Game():
             canvas.bind('<Motion>', self.targetting)
 
             for numb in range(self.gun_numb):
-                self.gun[numb].fall(self.fild, self.power, self.cos_a, self.sin_a)
+                self.gun[numb].move(self.fild, self.power, self.cos_a, self.sin_a)
 
         canvas.bind('<Button-1>', self.shot_prepair)
         self.power_up()
         canvas.bind('<ButtonRelease-1>', self.new_ball)
-#        #canvas.bind('<Up>', self.gun.move_up)
-#        #canvas.bind('<Down>', self.gun.move_down)
-#        #canvas.bind('<Left>', self.gun.move_left)
-#        #canvas.bind('<Right>', self.gun.move_right)
+        canvas.bind('<Up>', self.gun[self.turn % self.gun_numb].move_up)
+        canvas.bind('<Down>', self.gun[self.turn % self.gun_numb].move_down)
+        canvas.bind('<Left>', self.gun[self.turn % self.gun_numb].move_left)
+        canvas.bind('<Right>', self.gun[self.turn % self.gun_numb].move_right)
         self.ball_to_old()
         self.gun[self.turn % self.gun_numb].drowing(self.power, self.cos_a, self.sin_a)
         self.hit_check()
