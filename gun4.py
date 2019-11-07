@@ -77,8 +77,17 @@ class Ball:
             y2 = fild[max_numb][1]
             x1 = fild[min_numb][0]
             x2 = fild[max_numb][0]
-            cos_a = (x2 - x1) / ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
-            sin_a = -(y2 - y1) / ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
+
+            if x2 - x1 == 0:
+                cos_a = 0
+            else:
+                cos_a = (x2 - x1) / ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
+
+            if y2 - y1 == 0:
+                sin_a = 0
+            else:
+                sin_a = -(y2 - y1) / ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
+
             self.vy += self.g
             self.y += self.vy
             self.x -= self.vx
@@ -278,8 +287,16 @@ class Game():
         a = self.gun_numb
         dx = event.x - self.gun[self.turn % a].x
         dy = event.y - self.gun[self.turn % a].y
-        self.cos_a = dx / (dx ** 2 + dy ** 2) ** 0.5
-        self.sin_a = dy / (dx ** 2 + dy ** 2) ** 0.5
+
+        if dx == 0:
+            self.cos_a = 0
+        else:
+            self.cos_a = dx / (dx ** 2 + dy ** 2) ** 0.5
+
+        if dy == 0:
+            self.sin_a = 0
+        else:
+            self.sin_a = dy / (dx ** 2 + dy ** 2) ** 0.5
 
     def ball_to_old(self):
         numb = 0
